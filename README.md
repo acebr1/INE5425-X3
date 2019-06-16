@@ -24,5 +24,3 @@ double testVariance(double sampleVar1, unsigned long sampleNumElements1, double 
 Para (ii), deve haver um método de teste para cada método implementado (testes unitários), garantindo seu funcionamento. Um programa principal pode invocar cada teste, para facilitar a avaliação. É imprescindível que o valor correto gerado por cada método tenha sido previamente calculado "à mão" para conferência. 
 
 Para (iii), explicar s aspectos mais importantes do desenvolvimento. Como a entrega será pelo VPL do Moodle, sua documentação deve ser um arquivo texto simples.
-
-A nota final de cada integrante fica condicionada à demonstração presencial e individual de conhecimento sobre o desenvolvimento feito, de modo que é indispensável a participação de cada integrante da equipe durante a "apresentação e defesa" do X3. 

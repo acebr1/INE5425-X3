@@ -1,6 +1,4 @@
-#include "HypothesisTesting.h"
-#include <iostream>     
-#include <math.h>       /* sqrt */
+#include "HypothesisTesting.h" 
 
 double HypothesisTesting::testAverage(double sampleAvg1, double sampleStdDev1, unsigned long sampleNumElements1, double confidencelevel, double sampleAvg2, double sampleStdDev2, unsigned long sampleNumElements2, H1Comparition comp)
 {
@@ -35,8 +33,14 @@ double HypothesisTesting::normalCDF(double value)
    return 0.5 * erfc(-value * M_SQRT1_2);
 }
 
-int main() {
-	HypothesisTesting tester;
-	std::cout << tester.testProportion(0.3,200,0.90,0.38,250,H1Comparition::DIFFERENT) << std::endl;	
-	return 0;
+//https://github.com/codeplea/incbeta
+//https://codeplea.com/incomplete-beta-function-c
+double HypothesisTesting::studenttCDF(double t, double v) 
+{
+    /*The cumulative distribution function (CDF) for Student's t distribution*/
+    IncompleteBeta beta;
+    double x = (t + sqrt(t * t + v)) / (2.0 * sqrt(t * t + v));
+    double prob = beta.incbeta(v/2.0, v/2.0, x);
+    return prob;
 }
+

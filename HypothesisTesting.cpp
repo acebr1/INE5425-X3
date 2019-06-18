@@ -21,10 +21,21 @@ double HypothesisTesting::testProportion(double sampleProp1, unsigned long sampl
 
 double HypothesisTesting::testVariance(double sampleVar1, unsigned long sampleNumElements1, double confidencelevel, double sampleVar2, unsigned long sampleNumElements2, H1Comparition comp)
 {
-	unsigned long m = sampleNumElements1-1;
-	unsigned long n = sampleNumElements2-1;
+	unsigned long n = sampleNumElements1-1;
+	unsigned long m = sampleNumElements2-1;
 	double fcal = sampleVar1/sampleVar2;
-	return 0;
+	if (comp == H1Comparition::DIFFERENT) {
+		double leftTail = fsnedecorCDF(n, m, fcal);
+		double rightTail = 1 - leftTail;
+		return !(rightTail < leftTail)?2*rightTail:2*leftTail;
+	} else if (comp == H1Comparition::LESS_THAN) {
+		double leftTail = fsnedecorCDF(n, m, fcal);
+		return leftTail;
+	} else if (comp == H1Comparition::GREATER_THAN) {
+		double rightTail = 1 - fsnedecorCDF(n, m, fcal);
+		return rightTail;
+	}
+	return fcal;
 }
 
 //https://stackoverflow.com/questions/2328258/cumulative-normal-distribution-function-in-c-c
@@ -35,12 +46,21 @@ double HypothesisTesting::normalCDF(double value)
 
 //https://github.com/codeplea/incbeta
 //https://codeplea.com/incomplete-beta-function-c
+
 double HypothesisTesting::studenttCDF(double t, double v) 
 {
     /*The cumulative distribution function (CDF) for Student's t distribution*/
     IncompleteBeta beta;
     double x = (t + sqrt(t * t + v)) / (2.0 * sqrt(t * t + v));
-    double prob = beta.incbeta(v/2.0, v/2.0, x);
-    return prob;
+    return beta.incbeta(v/2.0, v/2.0, x);
+}
+
+//http://mathworld.wolfram.com/F-Distribution.html
+//https://en.wikipedia.org/wiki/F-distribution
+double HypothesisTesting::fsnedecorCDF(unsigned long n, unsigned long m, double x)
+{
+    /*The cumulative distribution function (CDF) for F distribution*/
+    IncompleteBeta beta;
+    return beta.regularizedbeta(n/2.0, m/2.0, (n*x)/(m+n*x));
 }
 

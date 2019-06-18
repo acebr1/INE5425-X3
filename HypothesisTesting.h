@@ -19,6 +19,7 @@ public:
 public:
 	double normalCDF(double value);
 	double studenttCDF(double t, double v);
+	double fsnedecorCDF(unsigned long n, unsigned long m, double x);
 };
 
 #endif

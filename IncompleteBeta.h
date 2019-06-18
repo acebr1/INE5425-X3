@@ -33,6 +33,7 @@ class IncompleteBeta {
 public:
 	IncompleteBeta() {}
 	double incbeta(double a, double b, double x);
+	double regularizedbeta(double a, double b, double x);
 };
 
 

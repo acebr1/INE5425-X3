@@ -75,3 +75,7 @@ double IncompleteBeta::incbeta(double a, double b, double x) {
 
     return 1.0/0.0; /*Needed more loops, did not converge.*/
 }
+
+double IncompleteBeta::regularizedbeta(double a, double b, double x) {
+    return incbeta(a,b,x) / incbeta(a,b,1);
+}

@@ -2,7 +2,42 @@
 
 double HypothesisTesting::testAverage(double sampleAvg1, double sampleStdDev1, unsigned long sampleNumElements1, double confidencelevel, double sampleAvg2, double sampleStdDev2, unsigned long sampleNumElements2, H1Comparition comp)
 {
-	return 0;
+	double var1 = sampleStdDev1 * sampleStdDev1;
+	double var2 = sampleStdDev2 * sampleStdDev2;
+	double df1 = sampleNumElements1 - 1;
+	double df2 = sampleNumElements2 - 1;
+	double alfa = 1 - confidencelevel;
+	double tobs;
+	unsigned long df;
+	
+	double pvalueVar = testVariance(var1, sampleNumElements1, var2, sampleNumElements2, H1Comparition::DIFFERENT);
+	
+	if (pvalueVar < alfa) {
+		//There is evidence to assume that variances are different
+		double se2 = var1/sampleNumElements1 + var2/sampleNumElements2;
+		double aux1 = ((var1/sampleNumElements1) * (var1/sampleNumElements1))/df1;
+		double aux2 = ((var2/sampleNumElements2) * (var2/sampleNumElements2))/df2;
+		double v = (se2*se2)/(aux1+aux2);
+		//round degrees of freedom
+		df = int (v+0.5);
+		tobs = (sampleAvg1-sampleAvg2)/sqrt(se2);
+	} else {
+		//There is no evidence to assume that variances are different
+		df = df1 + df2;
+		double sp = sqrt(((sampleNumElements1-1)*var1 + (sampleNumElements2-1)*var2)/df);
+		double se = sp * sqrt(1.0/sampleNumElements1 + 1.0/sampleNumElements2);
+		tobs = (sampleAvg1-sampleAvg2)/se;
+	}
+
+	if(comp == H1Comparition::DIFFERENT) {
+		return 2*studenttCDF(-abs(tobs), df);	
+	} else if (comp == H1Comparition::LESS_THAN){
+		return studenttCDF(tobs, df);
+	} else if(comp == H1Comparition::GREATER_THAN) {
+		return 1-studenttCDF(tobs, df);
+	}
+
+	return tobs;
 }
 //Returns the probability of rejecting H0 with true H0
 double HypothesisTesting::testProportion(double sampleProp1, unsigned long sampleNumElements1, double sampleProp2, unsigned long sampleNumElements2, H1Comparition comp)

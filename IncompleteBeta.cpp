@@ -24,6 +24,7 @@
  */
 
 #include "IncompleteBeta.h"  
+#include <math.h>
 
 const double stop = 1.0e-8;
 const double tiny = 1.0e-30;
@@ -74,8 +75,4 @@ double IncompleteBeta::incbeta(double a, double b, double x) {
     }
 
     return 1.0/0.0; /*Needed more loops, did not converge.*/
-}
-
-double IncompleteBeta::regularizedbeta(double a, double b, double x) {
-    return incbeta(a,b,x) / incbeta(a,b,1);
 }

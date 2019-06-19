@@ -1,4 +1,5 @@
 #include "HypothesisTesting.h"
+#include <iostream>
 
 double HypothesisTesting::testAverage(double sampleAvg1, double sampleStdDev1, unsigned long sampleNumElements1, double confidencelevel, double sampleAvg2, double sampleStdDev2, unsigned long sampleNumElements2, H1Comparition comp)
 {
@@ -97,5 +98,5 @@ double HypothesisTesting::fsnedecorCDF(unsigned long n, unsigned long m, double 
 {
     /*The cumulative distribution function (CDF) for F distribution*/
     IncompleteBeta beta;
-    return beta.regularizedbeta(n/2.0, m/2.0, (n*x)/(m+n*x));
+    return beta.incbeta(n/2.0, m/2.0, (n*x)/(m+n*x));
 }

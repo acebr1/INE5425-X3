@@ -1,4 +1,4 @@
-#include "HypothesisTesting.h" 
+#include "HypothesisTesting.h"
 
 double HypothesisTesting::testAverage(double sampleAvg1, double sampleStdDev1, unsigned long sampleNumElements1, double confidencelevel, double sampleAvg2, double sampleStdDev2, unsigned long sampleNumElements2, H1Comparition comp)
 {
@@ -9,9 +9,9 @@ double HypothesisTesting::testAverage(double sampleAvg1, double sampleStdDev1, u
 	double alfa = 1 - confidencelevel;
 	double tobs;
 	unsigned long df;
-	
+
 	double pvalueVar = testVariance(var1, sampleNumElements1, var2, sampleNumElements2, H1Comparition::DIFFERENT);
-	
+
 	if (pvalueVar < alfa) {
 		//There is evidence to assume that variances are different
 		double se2 = var1/sampleNumElements1 + var2/sampleNumElements2;
@@ -30,7 +30,7 @@ double HypothesisTesting::testAverage(double sampleAvg1, double sampleStdDev1, u
 	}
 
 	if(comp == H1Comparition::DIFFERENT) {
-		return 2*studenttCDF(-abs(tobs), df);	
+		return 2*studenttCDF(-abs(tobs), df);
 	} else if (comp == H1Comparition::LESS_THAN){
 		return studenttCDF(tobs, df);
 	} else if(comp == H1Comparition::GREATER_THAN) {
@@ -82,7 +82,7 @@ double HypothesisTesting::normalCDF(double value)
 //https://github.com/codeplea/incbeta
 //https://codeplea.com/incomplete-beta-function-c
 
-double HypothesisTesting::studenttCDF(double t, double v) 
+double HypothesisTesting::studenttCDF(double t, double v)
 {
     /*The cumulative distribution function (CDF) for Student's t distribution*/
     IncompleteBeta beta;
@@ -98,4 +98,3 @@ double HypothesisTesting::fsnedecorCDF(unsigned long n, unsigned long m, double 
     IncompleteBeta beta;
     return beta.regularizedbeta(n/2.0, m/2.0, (n*x)/(m+n*x));
 }
-

@@ -44,12 +44,13 @@ double HypothesisTesting::testProportion(double sampleProp1, unsigned long sampl
 {
 	double sampleProp = (sampleProp1*sampleNumElements1 + sampleProp2*sampleNumElements2)/(sampleNumElements1+sampleNumElements2);
 	double zobs = (sampleProp2 - sampleProp1)/sqrt(sampleProp * (1 - sampleProp) * (1.0 / sampleNumElements1 + 1.0 / sampleNumElements2));
+	double df = sampleNumElements1 + sampleNumElements2 - 2;
 	if (comp == H1Comparition::DIFFERENT) {
-		return 2*(normalCDF(-abs(zobs)));
+		return 2*(studenttCDF(-abs(zobs), df));
 	} else if (comp == H1Comparition::LESS_THAN) {
-		return normalCDF(zobs);
+		return studenttCDF(zobs, df);
 	} else if (comp == H1Comparition::GREATER_THAN) {
-		return 1-normalCDF(zobs);
+		return 1-studenttCDF(zobs, df);
 	}
 	return zobs;
 }

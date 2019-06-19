@@ -1,6 +1,5 @@
 
-#include "HypothesisTesting.cpp"
-#include "IncompleteBeta.h"
+#include "HypothesisTesting.h"
 #include <iostream>
 
 int main() {

@@ -2,7 +2,7 @@
 #define HYPOTHESISTESTING_H
 
 #include <math.h>
-#include "IncompleteBeta.cpp"
+#include "IncompleteBeta.h"
 
 enum H1Comparition {
 DIFFERENT = 1,

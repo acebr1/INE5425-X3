@@ -75,15 +75,8 @@ double HypothesisTesting::testVariance(double sampleVar1, unsigned long sampleNu
 	return fcal;
 }
 
-//https://stackoverflow.com/questions/2328258/cumulative-normal-distribution-function-in-c-c
-double HypothesisTesting::normalCDF(double value)
-{
-   return 0.5 * erfc(-value * M_SQRT1_2);
-}
-
 //https://github.com/codeplea/incbeta
 //https://codeplea.com/incomplete-beta-function-c
-
 double HypothesisTesting::studenttCDF(double t, double v)
 {
     /*The cumulative distribution function (CDF) for Student's t distribution*/

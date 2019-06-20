@@ -1,4 +1,4 @@
-/*
+/**
  * zlib License
  *
  * Regularized Incomplete Beta Function
@@ -29,8 +29,7 @@
 
 class IncompleteBeta {
 public:
-	IncompleteBeta() {}
-	double incbeta(double a, double b, double x);
+	static double incbeta(double a, double b, double x);
 };
 
 

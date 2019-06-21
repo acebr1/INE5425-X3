@@ -23,13 +23,11 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-
 #ifndef INCOMPLETEBETA_H
 #define INCOMPLETEBETA_H
 
 namespace IncompleteBeta {
-	double incbeta(double a, double b, double x);
+double incbeta(double a, double b, double x);
 }
-
 
 #endif

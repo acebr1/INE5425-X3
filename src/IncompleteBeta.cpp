@@ -26,8 +26,8 @@
 #include "IncompleteBeta.h"  
 #include <math.h>
 
-const double stop = 1.0e-8;
-const double tiny = 1.0e-30;
+const static double stop = 1.0e-8;
+const static double tiny = 1.0e-30;
 
 double IncompleteBeta::incbeta(double a, double b, double x) {
     if (x < 0.0 || x > 1.0) return 1.0/0.0;

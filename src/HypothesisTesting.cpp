@@ -1,7 +1,10 @@
 #include "HypothesisTesting.h"
+#include "IncompleteBeta.h"
 #include <math.h>
 
-double HypothesisTesting::testAverage(double sampleAvg1, double sampleStdDev1, unsigned long sampleNumElements1, double confidencelevel, double sampleAvg2, double sampleStdDev2, unsigned long sampleNumElements2, H1Comparition comp)
+namespace HypothesisTesting {
+
+double testAverage(double sampleAvg1, double sampleStdDev1, unsigned long sampleNumElements1, double confidencelevel, double sampleAvg2, double sampleStdDev2, unsigned long sampleNumElements2, H1Comparition comp)
 {
 	double var1 = sampleStdDev1 * sampleStdDev1;
 	double var2 = sampleStdDev2 * sampleStdDev2;
@@ -27,7 +30,7 @@ double HypothesisTesting::testAverage(double sampleAvg1, double sampleStdDev1, u
 	return pValueStudentT(tobs, df, comp);
 }
 
-double HypothesisTesting::testProportion(double sampleProp1, unsigned long sampleNumElements1, double sampleProp2, unsigned long sampleNumElements2, H1Comparition comp)
+double testProportion(double sampleProp1, unsigned long sampleNumElements1, double sampleProp2, unsigned long sampleNumElements2, H1Comparition comp)
 {
 	double sampleProp = (sampleProp1*sampleNumElements1 + sampleProp2*sampleNumElements2)/(sampleNumElements1+sampleNumElements2);
 	double tobs = (sampleProp2 - sampleProp1)/sqrt(sampleProp * (1 - sampleProp) * (1.0 / sampleNumElements1 + 1.0 / sampleNumElements2));
@@ -35,7 +38,7 @@ double HypothesisTesting::testProportion(double sampleProp1, unsigned long sampl
 	return pValueStudentT(tobs, df, comp);
 }
 
-double HypothesisTesting::testVariance(double sampleVar1, unsigned long sampleNumElements1, double sampleVar2, unsigned long sampleNumElements2, H1Comparition comp)
+double testVariance(double sampleVar1, unsigned long sampleNumElements1, double sampleVar2, unsigned long sampleNumElements2, H1Comparition comp)
 {
 	unsigned long n = sampleNumElements1-1;
 	unsigned long m = sampleNumElements2-1;
@@ -56,13 +59,13 @@ double HypothesisTesting::testVariance(double sampleVar1, unsigned long sampleNu
 
 //https://github.com/codeplea/incbeta
 //https://codeplea.com/incomplete-beta-function-c
-double HypothesisTesting::studenttCDF(double t, double v)
+double studenttCDF(double t, double v)
 {
     double x = (t + sqrt(t * t + v)) / (2.0 * sqrt(t * t + v));
     return IncompleteBeta::incbeta(v/2.0, v/2.0, x);
 }
 
-double HypothesisTesting::pValueStudentT(double tobs, double df, H1Comparition comp) {
+double pValueStudentT(double tobs, double df, H1Comparition comp) {
 	if (comp == H1Comparition::DIFFERENT) {
 		return 2*(studenttCDF(-abs(tobs), df));
 	} else if (comp == H1Comparition::LESS_THAN) {
@@ -75,7 +78,9 @@ double HypothesisTesting::pValueStudentT(double tobs, double df, H1Comparition c
 
 //http://mathworld.wolfram.com/F-Distribution.html
 //https://en.wikipedia.org/wiki/F-distribution
-double HypothesisTesting::fsnedecorCDF(unsigned long n, unsigned long m, double x)
+double fsnedecorCDF(unsigned long n, unsigned long m, double x)
 {
     return IncompleteBeta::incbeta(n/2.0, m/2.0, (n*x)/(m+n*x));
+}
+
 }

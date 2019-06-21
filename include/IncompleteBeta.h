@@ -27,10 +27,9 @@
 #ifndef INCOMPLETEBETA_H
 #define INCOMPLETEBETA_H
 
-class IncompleteBeta {
-public:
-	static double incbeta(double a, double b, double x);
-};
+namespace IncompleteBeta {
+	double incbeta(double a, double b, double x);
+}
 
 
 #endif

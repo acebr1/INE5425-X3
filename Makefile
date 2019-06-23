@@ -1,4 +1,4 @@
-.PHONY: clean run test
+.PHONY: clean run test debug
 
 CPPFLAGS = -std=c++11 -Iinclude
 CC = g++
@@ -22,6 +22,10 @@ tests: $(TSTOBJ)
 test: tests
 	@echo "Done Compiling!\n"
 	@./tests
+
+debug: tests
+	@echo "Done Compiling!\n"
+	@./tests "debug"
 
 clean:
 	rm -f $(OBJ)

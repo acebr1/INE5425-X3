@@ -1,8 +1,7 @@
 #include "HypothesisTesting.h"
 #include "testValues.h"
 #include <iostream>
-
-#define DEBUG false
+#include<string.h>
 
 bool testAverageTest(double sampleAvg1, double sampleStdDev1,
     unsigned long sampleNumElements1,double confidencelevel, double sampleAvg2,
@@ -22,11 +21,12 @@ double getMaxTStudentError();
 bool fSnedcorTest(double tolerance);
 double getMaxFSnedcorError();
 
-int main() {
-    double tolerance;
+int main(int argc, char *argv[]) {
+	// Check if argument debug was given
+	const bool DEBUG = (argc > 1) ? ((!strcmp(argv[1],"debug")) ? true : false) : false;
 
     // Tolerance for Distribution tests
-    tolerance = 1e-5;
+    double tolerance = 1e-5;
 
     // Call for Student's t cumulative distribution function tests
     std::cout << "Testing Student's t cumulative distribution function with "
@@ -42,7 +42,7 @@ int main() {
         << "\tMaximum error = " << getMaxFSnedcorError()
         << "\n" << std::endl;
 
-    // Tolerance for Hypothesis Tests
+    // New tolerance for Hypothesis Tests
     tolerance = 1e-3;
 
     // Call for Average test tests
@@ -63,6 +63,21 @@ int main() {
             testAverageData::expectedResult[i],
             tolerance) ? "Passed" : "Failed")
         <<  std::endl;
+		// If debug was called, print results also
+		if(DEBUG) {
+			std::cout << "\t\tExpected: " << testAverageData::expectedResult[i]
+			<< " Got: "
+	        << testAverage(
+	            testAverageData::sampleAvg1[i],
+	            testAverageData::sampleStdDev1[i],
+	            testAverageData::sampleNumElements1[i],
+	        	testAverageData::confidencelevel[i],
+	            testAverageData::sampleAvg2[i],
+	            testAverageData::sampleStdDev2[i],
+	        	testAverageData::sampleNumElements2[i],
+	            testAverageData::comp[i])
+	        <<  std::endl;
+		}
     }
 
     std::cout << std::endl;
@@ -82,6 +97,18 @@ int main() {
 			testProportionData::expectedResult[i],
             tolerance) ? "Passed" : "Failed")
         <<  std::endl;
+		// If debug was called, print results also
+		if(DEBUG) {
+			std::cout << "\t\tExpected: " << testProportionData::expectedResult[i]
+			<< " Got: "
+	        << testProportion(
+				testProportionData::sampleProp1[i],
+				testProportionData::sampleNumElements1[i],
+				testProportionData::sampleProp2[i],
+				testProportionData::sampleNumElements2[i],
+				testProportionData::comp[i])
+	        <<  std::endl;
+		}
     }
 
     std::cout << std::endl;
@@ -101,6 +128,18 @@ int main() {
 			testVarianceData::expectedResult[i],
             tolerance) ? "Passed" : "Failed")
         <<  std::endl;
+		// If debug was called, print results also
+		if(DEBUG) {
+			std::cout << "\t\tExpected: " << testVarianceData::expectedResult[i]
+			<< " Got: "
+	        << testVariance(
+				testVarianceData::sampleVar1[i],
+				testVarianceData::sampleNumElements1[i],
+				testVarianceData::sampleVar2[i],
+				testVarianceData::sampleNumElements2[i],
+				testVarianceData::comp[i])
+	        <<  std::endl;
+		}
     }
 
     std::cout << std::endl;
@@ -195,12 +234,6 @@ double getMaxTStudentError() {
     double t, calculatedQ, error;
     double maxError = 0;
 
-    if(DEBUG) {
-        std::cout << "------------------------------" << std::endl;
-        std::cout << "-------T STUDENT ERROR--------" << std::endl;
-        std::cout << "------------------------------" << std::endl;
-    }
-
     // Check whole table
     for(int n = 0; n < TStudent::numN; n++) {
         for(int q = 0; q < TStudent::numQ; q++) {
@@ -212,13 +245,6 @@ double getMaxTStudentError() {
             // Check if largest error so far
             if(error > maxError) {
                 maxError = error;
-                if(DEBUG) {
-                    std::cout << "\nN = " << TStudent::nValues[n] << std::endl;
-                    std::cout << "T = " << t << std::endl;
-                    std::cout << "Q = " << TStudent::qValues[q] << std::endl;
-                    std::cout << "CalculatedQ = " << calculatedQ << std::endl;
-                    std::cout << "Error = " << error << std::endl;
-                }
             }
         }
     }
@@ -279,12 +305,6 @@ double getMaxFSnedcorError() {
     double f, calculatedQ, error;
     double maxError = 0;
 
-    if(DEBUG) {
-        std::cout << "------------------------------" << std::endl;
-        std::cout << "-------F SNEDCOR ERROR--------" << std::endl;
-        std::cout << "------------------------------" << std::endl;
-    }
-
     // Check whole table
     for(int n = 0; n < FSnedcor::numN; n++) {
         for(int m = 0; m < FSnedcor::numM; m++) {
@@ -297,14 +317,6 @@ double getMaxFSnedcorError() {
             // Check if largest error so far
             if(error > maxError) {
                 maxError = error;
-                if(DEBUG) {
-                    std::cout << "\nN = " << FSnedcor::nValues[n] << std::endl;
-                    std::cout << "M = " << FSnedcor::mValues[m] << std::endl;
-                    std::cout << "F = " << f << std::endl;
-                    std::cout << "Q = 0.95" << std::endl;
-                    std::cout << "CalculatedQ = " << calculatedQ << std::endl;
-                    std::cout << "Error = " << error << std::endl;
-                }
             }
 
             // ---------- Q = 0.975 ----------
@@ -316,14 +328,6 @@ double getMaxFSnedcorError() {
             // Check if largest error so far
             if(error > maxError) {
                 maxError = error;
-                if(DEBUG) {
-                    std::cout << "\nN = " << FSnedcor::nValues[n] << std::endl;
-                    std::cout << "M = " << FSnedcor::mValues[m] << std::endl;
-                    std::cout << "F = " << f << std::endl;
-                    std::cout << "Q = 0.95" << std::endl;
-                    std::cout << "CalculatedQ = " << calculatedQ << std::endl;
-                    std::cout << "Error = " << error << std::endl;
-                }
             }
 
             // ---------- Q = 0.99 ----------
@@ -335,14 +339,6 @@ double getMaxFSnedcorError() {
             // Check if largest error so far
             if(error > maxError) {
                 maxError = error;
-                if(DEBUG) {
-                    std::cout << "\nN = " << FSnedcor::nValues[n] << std::endl;
-                    std::cout << "M = " << FSnedcor::mValues[m] << std::endl;
-                    std::cout << "F = " << f << std::endl;
-                    std::cout << "Q = 0.95" << std::endl;
-                    std::cout << "CalculatedQ = " << calculatedQ << std::endl;
-                    std::cout << "Error = " << error << std::endl;
-                }
             }
         }
     }

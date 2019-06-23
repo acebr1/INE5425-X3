@@ -92,7 +92,7 @@ int main() {
 
     for(int i = 0; i < testVarianceData::numTests; i++) {
         std::cout << "\tTest " << i + 1 << ": "
-        << (testProportionTest(
+        << (testVarianceTest(
 			testVarianceData::sampleVar1[i],
 			testVarianceData::sampleNumElements1[i],
 			testVarianceData::sampleVar2[i],
@@ -104,18 +104,6 @@ int main() {
     }
 
     std::cout << std::endl;
-
-
-	for(int i = 0; i < testVarianceData::numTests; i++) {
-	std::cout << "\tTest " << i + 1 << ": "
-	<< testProportion(
-		testVarianceData::sampleVar1[i],
-		testVarianceData::sampleNumElements1[i],
-		testVarianceData::sampleVar2[i],
-		testVarianceData::sampleNumElements2[i],
-		testVarianceData::comp[i])
-	<<  std::endl;
-	}
 
 	std::cout << "Finished all tests!" <<  std::endl;
 	return 0;

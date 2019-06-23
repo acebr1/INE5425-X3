@@ -224,12 +224,12 @@ namespace testProportionData {
  * Data for diferent Variance Tests
 ------------------------------------------------------------ */
 namespace testVarianceData {
-    int numTests = 1;
+    int numTests = 2;
 
-	double sampleVar1[]						= {0.683};
-	unsigned long sampleNumElements1[]		= {10};
-	double sampleVar2[]						= {0.750};
-	unsigned long sampleNumElements2[]		= {10};
-	HypothesisTesting::H1Comparition comp[]	= {HypothesisTesting::H1Comparition::DIFFERENT};
-	double expectedResult[]					= {0.787};
+	double sampleVar1[]						= {0.683,	65.549};
+	unsigned long sampleNumElements1[]		= {10,		240};
+	double sampleVar2[]						= {0.750,	61.854};
+	unsigned long sampleNumElements2[]		= {10,		240};
+	HypothesisTesting::H1Comparition comp[]	= {HypothesisTesting::H1Comparition::DIFFERENT, HypothesisTesting::H1Comparition::DIFFERENT};
+	double expectedResult[]					= {0.891,	0.654};
 }

@@ -1,3 +1,5 @@
+#include "HypothesisTesting.h"
+
 /* ------------------------------------------------------------
  * Data generated on Excel for T-Student distribution
 ------------------------------------------------------------ */
@@ -185,4 +187,52 @@ namespace FSnedcor {
     /*120.0*/	{6.8508934509,	    4.7865097397,        3.9490997925,	     3.4795313896,	     3.1735454752,	    2.9558540044,	    2.7917641097,	    2.6629056295,	    2.5585738821,	    2.4720767548,	    2.0345880631,	    1.7628487819,	    1.5329921831,	    1.3807422101},
     /*100000.0*/{6.6351498917,	    4.6053822684,        3.7818178516,	     3.3193631870,	     3.0174368368,	    2.8021618045,	    2.6395073929,	    2.5114563072,	    2.4075092392,	    2.3211016193,	    1.8784955011,	    1.5924730257,	    1.3248558853,	    1.0148219912}
     };
+}
+
+/* ------------------------------------------------------------
+ * Data for diferent Average Tests (Calculated manually)
+------------------------------------------------------------ */
+namespace testAverageData {
+    int numTests = 3;
+	/*										   Test 1							Test 2								Test 3*/
+    double sampleAvg1[]                     = {28, 								29,									105.5};
+    double sampleStdDev1[]                  = {4.1, 							3.7,								20.1};
+    unsigned long sampleNumElements1[]      = {15, 								17,									34};
+	double confidencelevel[]                = {0.95,							0.95,								0.05};
+    double sampleAvg2[]                     = {26,								26,									90.9};
+    double sampleStdDev2[]                  = {3.8,								3.8,								12.2};
+	unsigned long sampleNumElements2[]      = {10,								17,									29};
+    HypothesisTesting::H1Comparition comp[] = {HypothesisTesting::DIFFERENT, 	HypothesisTesting::GREATER_THAN, 	HypothesisTesting::DIFFERENT};
+    double expectedResult[]                 = {0.231,							0.0131,								0.000824};
+}
+
+/* ------------------------------------------------------------
+ * Data for diferent Proportion Tests (Calculated manually)
+------------------------------------------------------------ */
+namespace testProportionData {
+    int numTests = 3;
+
+	/*										   Test 1							Test 2								Test 3*/
+	double sampleProp1[]					= {(52.0/69.0),						(130.0/750.0),						(301.0/510.0)};
+	unsigned long sampleNumElements1[]		= {69,								750,								510};
+	double sampleProp2[]					= {(120.0/131.0),					(160.0/700.0),						(97.0/230.0)};
+	unsigned long sampleNumElements2[]		= {131,								700,								230};
+	HypothesisTesting::H1Comparition comp[]	= {HypothesisTesting::DIFFERENT, 	HypothesisTesting::GREATER_THAN,	HypothesisTesting::DIFFERENT};
+	double expectedResult[]					= {0.0016,							0.0043,								0.000};
+}
+
+/* ------------------------------------------------------------
+ * Data for diferent Variance Tests (Calculated manually)
+------------------------------------------------------------ */
+namespace testVarianceData {
+	//ypedef H1C HypothesisTesting::H1Comparition;
+    int numTests = 3;
+
+	/*										   Test 1							Test 2							Test 3*/
+	double sampleVar1[]						= {0.683,							65.549,							(1.36*1.36)};
+	unsigned long sampleNumElements1[]		= {10,								240,							25};
+	double sampleVar2[]						= {0.750,							61.854,							(2.89*2.89)};
+	unsigned long sampleNumElements2[]		= {10,								240,							30};
+	HypothesisTesting::H1Comparition comp[]	= {HypothesisTesting::DIFFERENT, 	HypothesisTesting::DIFFERENT,	HypothesisTesting::DIFFERENT};
+	double expectedResult[]					= {0.891,							0.654,							0.000358};
 }

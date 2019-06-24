@@ -27,15 +27,15 @@ double testAverage(
 		var1, sampleNumElements1, var2, sampleNumElements2,
 		H1Comparition::DIFFERENT);
 
-	if (pvalueVar < alfa) { // Case 1: Populational variances are unknown, but equal (Variance pvalue < alfa)
+	if (pvalueVar < alfa) { // Case 1: Populational variances are unknown, but different
 		double se2 = var1 / sampleNumElements1 + var2 / sampleNumElements2;
 		double aux1 =
 			((var1 / sampleNumElements1) * (var1 / sampleNumElements1)) / df1;
 		double aux2 =
 			((var2 / sampleNumElements2) * (var2 / sampleNumElements2)) / df2;
-		df = (se2 * se2) / (aux1 + aux2);
+		df = (se2 * se2) / (aux1 + aux2); // Degrees of Freedom can be fractional 
 		tobs = (sampleAvg1 - sampleAvg2) / sqrt(se2);
-	} else { // Case 2: Populational variances are unknown, but different (Variance pvalue >= alfa)
+	} else { // Case 2: Populational variances are unknown, but equal
 		df = df1 + df2;
 		double sp = sqrt(
 			((sampleNumElements1 - 1) * var1 +

@@ -10,6 +10,7 @@ int main() {
 			  << std::endl;
 
 	// Exemplo 2: resposta aproximadamente 0.0016 (OK)
+	// O autor do exercício usou a tabela normal e não a T-student
 	std::cout << "Teste de Igualdade entre duas Proporções:" << std::endl;
 	std::cout << HypothesisTesting::testProportion(
 					0.753, 69, 0.916, 131,

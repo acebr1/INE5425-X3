@@ -1,7 +1,8 @@
 .PHONY: clean run test debug
+CXX = g++
+CC = g++
 
 CPPFLAGS = -std=c++11 -Iinclude
-CC = g++
 LDFLAGS = -lm -lstdc++
 
 SRC = $(wildcard src/*.cpp main.cpp)
